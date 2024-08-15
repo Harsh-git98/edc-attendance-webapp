@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <h1>
+        EDC Attendance Tracker
+    </h1>
+
+    <div>
+
+        <button>
+            create EDC Meet
+
+        </button>
+        <button>
+            Mark Attendance
+
+        </button>
+    </div> -->
+
+    <div id="map"></div>
+
+    <script>
+      navigator.geolocation.getCurrentPosition(position => {
+    const { latitude, longitude } = position.coords;
+    map.innerHTML = '<iframe width="700" height="300" src="https://maps.google.com/maps?q=' + latitude + ',' + longitude + '&amp;z=15&amp;output=embed"></iframe>';
+});
+
+
+
+        
+
+        
+
+    </script>
+    
+</body>
+</html>
