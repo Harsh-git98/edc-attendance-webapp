@@ -3,40 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>EDC Attendance Tracker</title>
 </head>
 <body>
-    <!-- <h1>
-        EDC Attendance Tracker
-    </h1>
+    <h1>EDC Attendance Tracker</h1>
 
     <div>
+        <button>Create EDC Meet</button>
+        <button>Mark Attendance</button>
+    </div>
 
-        <button>
-            create EDC Meet
-
-        </button>
-        <button>
-            Mark Attendance
-
-        </button>
-    </div> -->
-
-    <div id="map"></div>
+    <div id="map" style="margin-top: 20px;"></div>
 
     <script>
-      navigator.geolocation.getCurrentPosition(position => {
-    const { latitude, longitude } = position.coords;
-    map.innerHTML = '<iframe width="700" height="300" src="https://maps.google.com/maps?q=' + latitude + ',' + longitude + '&amp;z=15&amp;output=embed"></iframe>';
-});
+        // Function to update the map with the current location
+        function updateMap(latitude, longitude) {
+            document.getElementById('map').innerHTML = 
+                '<iframe width="700" height="300" src="https://maps.google.com/maps?q=' 
+                + latitude + ',' + longitude + '&amp;z=15&amp;output=embed"></iframe>';
+        }
 
-
-
-        
-
-        
-
+        // Watch the user's location and update the map whenever it changes
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(position => {
+                const { latitude, longitude } = position.coords;
+                updateMap(latitude, longitude);
+            }, 
+            error => {
+                console.error("Error getting location:", error);
+            }, 
+            {
+                enableHighAccuracy: true,
+                maximumAge: 0,
+                timeout: 5000
+            });
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
     </script>
-    
 </body>
 </html>
