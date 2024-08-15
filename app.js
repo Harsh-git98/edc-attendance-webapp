@@ -14,7 +14,7 @@ app.use(express.static('public'));
 const todoController = require('./controllers/todoController');
 todoController(app);
 
-const port =3300;
+const port =3301;
 // Listen to port
 app.listen(port, () => {
     console.log(`Listening to port ${port}`);

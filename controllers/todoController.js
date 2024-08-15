@@ -1,5 +1,7 @@
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+const geolib = require('geolib');
+
 
 // Middleware for parsing URL-encoded data
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -37,7 +39,7 @@ module.exports = function(app) {
             const { latitude, longitude, name } = req.body;
             const distance = calculateDistance(meetData.latitude, meetData.longitude, latitude, longitude);
             
-            if (distance <= 5) {
+            if (distance <=10) {
                 attendees.push({ name, latitude, longitude });
                 res.json({ success: true });
                 console.log("attendees data added");
@@ -69,21 +71,29 @@ module.exports = function(app) {
     });
     
     // Utility functions
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371e3; // Earth radius in meters
-        const φ1 = lat1 * Math.PI/180;
-        const φ2 = lat2 * Math.PI/180;
-        const Δφ = (lat2-lat1) * Math.PI/180;
-        const Δλ = (lon2-lon1) * Math.PI/180;
+    // function calculateDistance(lat1, lon1, lat2, lon2) {
+    //     const R = 6371e3; // Earth radius in meters
+    //     const φ1 = lat1 * Math.PI/180;
+    //     const φ2 = lat2 * Math.PI/180;
+    //     const Δφ = (lat2-lat1) * Math.PI/180;
+    //     const Δλ = (lon2-lon1) * Math.PI/180;
 
-        const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-                  Math.cos(φ1) * Math.cos(φ2) *
-                  Math.sin(Δλ/2) * Math.sin(Δλ/2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    //     const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+    //               Math.cos(φ1) * Math.cos(φ2) *
+    //               Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    //     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-        const distance = R * c; // in meters
-        return distance;
-    }
+    //     const distance = R * c; // in meters
+    //     return distance;
+    // }
+
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    return geolib.getDistance(
+        { latitude: lat1, longitude: lon1 },
+        { latitude: lat2, longitude: lon2 }
+    );
+}
 
     function sendAttendanceEmail(attendees) {
         // Set up nodemailer transport
