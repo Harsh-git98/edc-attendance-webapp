@@ -9,37 +9,57 @@
     <h1>EDC Attendance Tracker</h1>
 
     <div>
-        <button>Create EDC Meet</button>
-        <button>Mark Attendance</button>
+        <button >Create EDC Meet</button>
+        
+      
+    </div>
+    <hr>
+    <div>
+        <form action="/post">
+            <input type="text" placeholder="MeetID"></input>
+            
+            <input type="text" placeholder="Name"></input>
+            <button>Mark Attendance</button>
+        </form>
     </div>
 
-    <div id="map" style="margin-top: 20px;"></div>
+    <div id="map" style="margin-top: 20px;">
+        <iframe id="mapFrame" width="700" height="300" src=""></iframe>
+    </div>
 
     <script>
+
         // Function to update the map with the current location
         function updateMap(latitude, longitude) {
-            document.getElementById('map').innerHTML = 
-                '<iframe width="700" height="300" src="https://maps.google.com/maps?q=' 
-                + latitude + ',' + longitude + '&amp;z=15&amp;output=embed"></iframe>';
+            const mapFrame = document.getElementById('mapFrame');
+            mapFrame.src = 'https://maps.google.com/maps?q=' + latitude + ',' + longitude + '&amp;z=15&amp;output=embed';
         }
 
-        // Watch the user's location and update the map whenever it changes
-        if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(position => {
-                const { latitude, longitude } = position.coords;
-                updateMap(latitude, longitude);
-            }, 
-            error => {
-                console.error("Error getting location:", error);
-            }, 
-            {
-                enableHighAccuracy: true,
-                maximumAge: 0,
-                timeout: 5000
-            });
-        } else {
-            alert("Geolocation is not supported by your browser.");
+        // Function to get the current position and update the map
+        function getLocationAndUpdateMap() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const { latitude, longitude } = position.coords;
+                    updateMap(latitude, longitude);
+                }, 
+                error => {
+                    console.error("Error getting location:", error);
+                }, 
+                {
+                    enableHighAccuracy: true,
+                    maximumAge: 0,
+                    timeout: 5000
+                });
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
         }
+
+        // Initial location update
+        getLocationAndUpdateMap();
+
+        // Update the location every 30 seconds (30000 milliseconds)
+        setInterval(getLocationAndUpdateMap, 30000);
     </script>
 </body>
 </html>
