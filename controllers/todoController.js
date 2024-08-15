@@ -39,7 +39,7 @@ module.exports = function(app) {
             const { latitude, longitude, name } = req.body;
             const distance = calculateDistance(meetData.latitude, meetData.longitude, latitude, longitude);
             
-            if (distance <=1000) {
+            if (distance <=20) {
                 attendees.push({ name, latitude, longitude });
                 res.json({ success: true });
                 console.log("attendees data added");
