@@ -117,11 +117,20 @@
 
 </style>
 <body>
-    <div>
-    <img src="/images/logo.png" alt="">
-    <h1>EDC Attendance Tracker</h1>
+    
 
-</div>
+
+    <div>
+        <img src="/images/logo.png" alt="EDC Logo" />
+        <h1>EDC Attendance Tracker</h1>
+        <% if (user && user.displayName) { %>
+            <h1>Hello, <%= user.displayName %></h1>
+        <% } else { %>
+            <h1>Hello, Guest</h1>
+        <% } %>
+    </div>
+    
+    
 <hr>
 
     <div class="creation">
@@ -133,7 +142,7 @@
     
     <div class="marking">
         <form id="attendance-form">
-            <input type="text" id="name-input" placeholder="Enter Name to Mark Attendance">
+            <!-- <input type="text" id="name-input" placeholder="Enter Name to Mark Attendance"> -->
             <button id="mark-attendance-btn">Mark Attendance</button>
         </form>
     </div>
@@ -173,6 +182,7 @@
 
         // Initial location update
         getLocationAndUpdateDisplay();
+        const userName = "<%= user.displayName %>";
 
         // Update the location every 30 seconds (30000 milliseconds)
         setInterval(getLocationAndUpdateDisplay, 30000);
@@ -198,7 +208,8 @@
 
         document.getElementById('mark-attendance-btn').addEventListener('click', (e) => {
             e.preventDefault();
-            const name = document.getElementById('name-input').value;
+            const name = userName;
+
             navigator.geolocation.getCurrentPosition(position => {
                 const { latitude, longitude } = position.coords;
                 fetch('/mark-attendance', {
