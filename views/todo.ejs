@@ -154,6 +154,9 @@
     </div>
 
     <script>
+
+let preventReload = false;
+
         // Function to update the displayed latitude and longitude
         function updateLocationDisplay(latitude, longitude) {
             document.getElementById('latitude').textContent = latitude;
@@ -199,6 +202,7 @@
                         // Disable button for all users
                         document.getElementById('create-meet-btn').style.display = 'none';
                         document.getElementById('end-meet-btn').style.display = 'block';
+                        preventReload = true; 
                     } else {
                         alert(data.message);
                     }
@@ -235,11 +239,20 @@
                     alert('Meet ended. Attendance email sent.');
                     document.getElementById('create-meet-btn').style.display = 'block';
                     document.getElementById('end-meet-btn').style.display = 'none';
+                    preventReload = false; 
                 } else {
                     alert(data.message);
                 }
             });
         });
+         // Show alert on manual reload
+    window.addEventListener('beforeunload', (e) => {
+        if (preventReload) {
+            e.preventDefault();
+            e.returnValue = ''; // Some browsers require returnValue to be set
+            return 'The meet is active. Reloading the page will lose the meet data. Are you sure you want to reload?';
+        }
+    });
     </script>
 </body>
 </html>
