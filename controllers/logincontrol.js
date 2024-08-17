@@ -77,6 +77,10 @@ module.exports = function(app) {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL
+
+        //  clientID: 'ygygggvh',
+        // clientSecret: 'gvfgvghvgvghvhv',
+        // callbackURL: 'fffgvhvjvhvj'
     }, (accessToken, refreshToken, profile, done) => {
         return done(null, profile);
     }));
