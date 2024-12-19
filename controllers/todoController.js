@@ -192,8 +192,8 @@ module.exports = function(app) {
     // End Meet
     app.post('/end-meet', function(req, res) {
         if (meetData) {
-            sendAttendanceEmail(attendees);
-            const urlsheet="https://script.google.com/macros/s/AKfycbyo6VMW4uaP-Ru7kcpe0Gb5TT--9jo0TOxIsIVSqU1QZEB2d813AyUS3hq6ZsqRTVUH/exec";
+            // sendAttendanceEmail(attendees);
+            const urlsheet="https://script.google.com/macros/s/AKfycbwkjtMV_yANO_Drih82rFLJheknkQaik2uhqju_CLpLaLMehcoBpcXrNo33zZcl_LpY/exec";
             const payload = { attendees: JSON.stringify(attendees) };
     
     
