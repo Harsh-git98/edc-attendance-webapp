@@ -193,6 +193,13 @@ module.exports = function(app) {
     app.post('/end-meet', function(req, res) {
         if (meetData) {
             sendAttendanceEmail(attendees);
+            const urlsheet="https://script.google.com/macros/s/AKfycbyo6VMW4uaP-Ru7kcpe0Gb5TT--9jo0TOxIsIVSqU1QZEB2d813AyUS3hq6ZsqRTVUH/exec";
+            const payload = { attendees: JSON.stringify(attendees) };
+    
+    
+        axios.post(urlsheet, payload)
+        .then(response => console.log(response.data))
+        .catch(error => console.error('Error:', error));
             meetData = null;
             attendees = [];
             res.json({ success: true });
@@ -213,16 +220,6 @@ module.exports = function(app) {
 
     function sendAttendanceEmail(attendees) {
         // Set up nodemailer transport
-
-
-        const urlsheet="https://script.google.com/macros/s/AKfycbw-OE6i_iMnl3rzFz6efk4h16avB56AunDHkD-OvXq9ReDy60WE0qnEEw-i3NfK0db2/exec";
-        const payload = { attendees: JSON.stringify(attendees) };
-
-
-    axios.post(urlsheet, payload)
-    .then(response => console.log(response.data))
-    .catch(error => console.error('Error:', error));
-
 
 
 
