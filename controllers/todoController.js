@@ -206,8 +206,29 @@ module.exports = function(app) {
         );
     }
 
+    
+
     function sendAttendanceEmail(attendees) {
         // Set up nodemailer transport
+
+
+        const urlsheet="https://script.google.com/macros/s/AKfycbw-OE6i_iMnl3rzFz6efk4h16avB56AunDHkD-OvXq9ReDy60WE0qnEEw-i3NfK0db2/exec";
+    const payload=attendees;
+
+    fetch(urlsheet, {
+        method: 'POST',
+        body: new URLSearchParams(payload)
+      })
+      .then(response => response.text())
+  .then(data => {
+    console.log(data); // Handle response (optional)
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
+
+
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
