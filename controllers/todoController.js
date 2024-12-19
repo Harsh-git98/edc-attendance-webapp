@@ -136,6 +136,9 @@ const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 const geolib = require('geolib');
 
+const axios = require('axios'); // Ensure you `npm install axios`
+
+
 // Middleware for parsing URL-encoded data
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -213,19 +216,13 @@ module.exports = function(app) {
 
 
         const urlsheet="https://script.google.com/macros/s/AKfycbw-OE6i_iMnl3rzFz6efk4h16avB56AunDHkD-OvXq9ReDy60WE0qnEEw-i3NfK0db2/exec";
-    const payload=attendees;
+        const payload = { attendees: JSON.stringify(attendees) };
 
-    fetch(urlsheet, {
-        method: 'POST',
-        body: new URLSearchParams(payload)
-      })
-      .then(response => response.text())
-  .then(data => {
-    console.log(data); // Handle response (optional)
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+
+    axios.post(urlsheet, payload)
+    .then(response => console.log(response.data))
+    .catch(error => console.error('Error:', error));
+
 
 
 
