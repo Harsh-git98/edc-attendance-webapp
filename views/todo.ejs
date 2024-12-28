@@ -121,7 +121,19 @@ hr {
     margin: 40px auto;
     max-width: 80%;
 }
-
+a{
+    text-decoration: none;
+    color: #3498db;
+    cursor: pointer;
+    margin: auto auto ;
+    width: 30vw;
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #0a314b;
+    border-radius: 10px;
+}
 </style>
 <body>
     
@@ -138,10 +150,13 @@ hr {
         <% } else { %>
             <h2>Hello, Guest</h2>
         <% } %>
+
+       
     </div>
     
     
 <hr>
+
 
     <div class="creation">
         <button id="create-meet-btn">Create EDC Meet</button>
@@ -156,7 +171,9 @@ hr {
             <button id="mark-attendance-btn">Mark Attendance</button>
         </form>
     </div>
-
+  
+    <a onclick="/logout"> log out</a>
+    <hr>
     <div id="location-display" style="margin-top: 20px;">
         <p>Latitude: <span id="latitude"></span></p>
         <p>Longitude: <span id="longitude"></span></p>
